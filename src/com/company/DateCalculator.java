@@ -153,6 +153,7 @@ public class DateCalculator {
     // Calculate days between
     public static void result(String startDate, String endDate){
         long result = daysBetween(startDate,endDate);
+        System.out.println("The result is : ");
         System.out.println(result + " days\n");
     }
 

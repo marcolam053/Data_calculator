@@ -97,17 +97,17 @@ class DateCalculatorTest {
     }
 
     @Test
-    void Check_Impossible_Days() {
+    void CheckImpossibleDays() {
         assertEquals(false, DateCalculator.isValid("31/04/2019"));
     }
 
     @Test
-    void CheckInvalidMonth1() {
+    void CheckImpossibleMonth1() {
         assertEquals(false, DateCalculator.isValid("31/13/2019"));
     }
 
     @Test
-    void CheckInvalidMonth2() {
+    void CheckImpossibleMonth2() {
         assertEquals(false, DateCalculator.isValid("31/00/2019"));
     }
 
@@ -119,6 +119,11 @@ class DateCalculatorTest {
     @Test
     void CheckIsValidDateUpper() {
         assertEquals(false,DateCalculator.isValid("01/01/3000"));
+    }
+
+    @Test
+    void CheckValidDateCorrect() {
+        assertEquals(true,DateCalculator.isValid("01/01/2019"));
     }
 
     // Test for days between calculation and logic
