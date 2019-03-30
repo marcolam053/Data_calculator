@@ -1,11 +1,6 @@
 package com.company;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DateCalculatorTest {
