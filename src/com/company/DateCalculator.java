@@ -112,10 +112,8 @@ public class DateCalculator {
         if (args.length != 0) {
             // validate argument len
             if (args.length > 2 ) {
-//                System.out.println ();
                 throw new IllegalArgumentException("Too many arguments.");
             } else if (args.length < 2){
-//                System.out.println("\nMissing arguments. Please enter an extra date and try again.\nQuiting date calculator.");
                 throw new IllegalArgumentException("Missing arguments.");
             } else {
                 // validate and set start date
