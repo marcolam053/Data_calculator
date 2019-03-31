@@ -60,7 +60,6 @@ public class DateCalculator {
                 continue;
             }
         }
-        input.close();
         return date;
     }
 
