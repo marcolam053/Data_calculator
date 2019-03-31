@@ -165,5 +165,6 @@ public class DateCalculator {
         }
         // Calculate the days between two dates
         DateCalculator.result(startDate,endDate);
+        keyboard.close();
     }
 }
