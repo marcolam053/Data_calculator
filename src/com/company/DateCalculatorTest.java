@@ -97,6 +97,11 @@ class DateCalculatorTest {
     }
 
     @Test
+    void CheckPatterneCorrect() {
+        assertEquals(true,DateCalculator.isValid("01/01/2019"));
+    }
+
+    @Test
     void CheckImpossibleDays() {
         assertEquals(false, DateCalculator.isValid("31/04/2019"));
     }
@@ -112,18 +117,13 @@ class DateCalculatorTest {
     }
 
     @Test
-    void CheckIsValidDateLower() {
+    void CheckDateOutOfBoundLower() {
         assertEquals(false,DateCalculator.isValid("01/01/1900"));
     }
 
     @Test
-    void CheckIsValidDateUpper() {
+    void CheckDateOutOfBoundUpper() {
         assertEquals(false,DateCalculator.isValid("01/01/3000"));
-    }
-
-    @Test
-    void CheckValidDateCorrect() {
-        assertEquals(true,DateCalculator.isValid("01/01/2019"));
     }
 
     // Test for days between calculation and logic
@@ -134,7 +134,7 @@ class DateCalculatorTest {
 
     @Test
     void CheckLogic2() {
-        assertEquals(1,DateCalculator.daysBetween("03/08/1983","05/08/1983"));
+        assertEquals(0,DateCalculator.daysBetween("03/08/1983","04/08/1983"));
     }
 
     @Test
@@ -163,8 +163,13 @@ class DateCalculatorTest {
     }
 
     @Test
-    void CheckZeroDay() {
-        assertEquals(0,DateCalculator.daysBetween("03/08/1983","03/08/1983"));
+    void CheckLargeDaysBetween1(){
+        assertEquals(401210,DateCalculator.daysBetween("04/07/1901","25/12/2999"));
+    }
+
+    @Test
+    void CheckLargeDaysBetween2(){
+        assertEquals(401400,DateCalculator.daysBetween("01/01/1901","31/12/2999"));
     }
 
 }

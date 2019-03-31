@@ -13,16 +13,51 @@ public class DateCalculator {
     private static String startDate = null;
     private  static String endDate = null;
 
+    // Handle user input.
+    public static void greetUser() {
+        System.out.println("Please choose a data entry method:");
+        System.out.println("1 : Manual Entry\n2 : Quit Programme\n");
+
+        // Validate Input method.
+        while (keyboard.hasNextLine()) {
+            String command = keyboard.nextLine();
+            if (command.isEmpty()) {
+                System.out.println("Please enter a number.");
+            }
+            // Input handler
+            if (command.matches("[1-2]")) {
+                Manual_entry(command);
+                break;
+            } else {
+                System.out.println("Invalid input.Try again.");
+                continue;
+            }
+        }
+    }
+
+    public static void Manual_entry(String command) {
+        if (command.equals("1")) {
+            System.out.println("Please enter start date. Date format accepted :  DD/MM/YYYY.");
+            startDate = set_date();
+            // set end Date and validate
+            System.out.println("Please enter end date. Date format accepted :  DD/MM/YYYY.");
+            endDate = set_date();
+        } else if (command.equals("2")) {
+            System.out.println("Thank you for using date calculator.");
+            System.exit(0);
+        }
+    }
+
     // Helper method for setting date in entry Handler
     public static String set_date() {
         Scanner input = new Scanner(System.in);
         String date ="";
         while (input.hasNextLine()) {
             date = input.nextLine();
-            if(!isValid(date)){
-                continue;
-            }else {
+            if(isValid(date)){
                 break;
+            }else {
+                continue;
             }
         }
         return date;
@@ -62,22 +97,6 @@ public class DateCalculator {
         return true;
     }
 
-    // Handle date calculation
-    public static long daysBetween(String start, String end) {
-        int[] start_arr = toIntArr(start);
-        int[] end_arr = toIntArr(end);
-        LocalDate startDate = LocalDate.of(start_arr[2],start_arr[1],start_arr[0]);
-        LocalDate endDate = LocalDate.of(end_arr[2],end_arr[1],end_arr[0]);
-        if (startDate.equals(endDate)){
-            return 0;
-        }
-        long daysBetween = ChronoUnit.DAYS.between(startDate,endDate);
-        if (daysBetween < 0){
-            daysBetween= daysBetween*-1;
-        }
-        return Math.toIntExact(daysBetween)-1;
-    }
-
     // helper for coverting string into int[]
     private static int[] toIntArr(String input) {
         String[] arr = input.split("/");
@@ -86,41 +105,6 @@ public class DateCalculator {
             result[i] = Integer.parseInt(arr[i]);
         }
         return result;
-    }
-
-    // Handle user input.
-    public static void greetUser() {
-        System.out.println("Please choose a data entry method:");
-        System.out.println("1 : Manual Entry\n2 : Quit Programme\n");
-
-        // Validate Input method.
-        while (keyboard.hasNextLine()) {
-            String command = keyboard.nextLine();
-            if (command.isEmpty()) {
-                System.out.println("Please enter a number.");
-            }
-            // Input handler
-            if (command.matches("[1-2]")) {
-                entry_handler(command);
-                break;
-            } else {
-                System.out.println("Invalid input.Try again.");
-                continue;
-            }
-        }
-    }
-
-    public static void entry_handler(String command) {
-        if (command.equals("1")) {
-            System.out.println("Please enter start date. Date format accepted :  DD/MM/YYYY.");
-            startDate = set_date();
-            // set end Date and validate
-            System.out.println("Please enter end date. Date format accepted :  DD/MM/YYYY.");
-            endDate = set_date();
-        } else if (command.equals("2")) {
-            System.out.println("Thank you for using date calculator.");
-            System.exit(0);
-        }
     }
 
     // Validate command line arguments
@@ -134,13 +118,13 @@ public class DateCalculator {
 //                System.out.println("\nMissing arguments. Please enter an extra date and try again.\nQuiting date calculator.");
                 throw new IllegalArgumentException("Missing arguments.");
             } else {
-                // validate input
+                // validate and set start date
                 if (isValid(args[0])){
                     startDate = args[0];
                 } else {
                     throw new IllegalArgumentException("ERROR : Invalid start date");
                 }
-
+                // validate and set end date
                 if (isValid(args[1])){
                     endDate = args[1];
                 }else {
@@ -157,15 +141,31 @@ public class DateCalculator {
         System.out.println(result + " days\n");
     }
 
+    // Handle date calculation
+    public static long daysBetween(String start, String end) {
+        int[] start_arr = toIntArr(start);
+        int[] end_arr = toIntArr(end);
+        LocalDate startDate = LocalDate.of(start_arr[2],start_arr[1],start_arr[0]);
+        LocalDate endDate = LocalDate.of(end_arr[2],end_arr[1],end_arr[0]);
+        if (startDate.equals(endDate)){
+            return 0;
+        }
+        long daysBetween = ChronoUnit.DAYS.between(startDate,endDate);
+        if (daysBetween < 0){
+            daysBetween= daysBetween*-1;
+        }
+        return Math.toIntExact(daysBetween)-1;
+    }
+
     public static void main(String[] args) {
         System.out.println("Welcome to Date Calculator.\n");
         // If there is no command line argument, choose option.
         if (args.length == 0){
-            DateCalculator.greetUser(); // TODO : Test case for main argument method.
+            DateCalculator.greetUser();
         } else {
-            DateCalculator.argument(args); // TODO : Test case for main.argument method
+            DateCalculator.argument(args);
         }
         // Calculate the days between two dates
-        DateCalculator.result(startDate,endDate); // TODO : test case for calculate days between
+        DateCalculator.result(startDate,endDate);
     }
 }
