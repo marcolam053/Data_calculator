@@ -1,4 +1,4 @@
-# Data_calculator
+# Data calculator
 Date Calculator - An application for calculating days between two dates
 
 ## About
