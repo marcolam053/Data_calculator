@@ -1,15 +1,18 @@
 package com.company;
 
 import org.junit.jupiter.api.Test;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DateCalculatorTest {
+
     // Tests for Command Line Argument Handler and validation
     @Test
-    void CheckExtraArguments(){
-        String[] input ={"01/01/1996","01/01/1989","01/01/2000"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("Too many arguments.",exception.getMessage());
+    void CheckExtraArguments() {
+        String[] input = {"01/01/1996", "01/01/1989", "01/01/2000"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("Too many arguments.", exception.getMessage());
     }
 
     @Test
@@ -21,48 +24,48 @@ class DateCalculatorTest {
 
     // Impossible Dates Validation Check
     @Test
-    void CheckArgumentsImpossibleStartMonth(){
-        String[] input ={"01/00/1996","01/01/1996"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("ERROR : Invalid start date",exception.getMessage());
+    void CheckArgumentsImpossibleStartMonth() {
+        String[] input = {"01/00/1996", "01/01/1996"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("ERROR : Invalid start date", exception.getMessage());
     }
 
     @Test
-    void CheckArgumentsImpossibleStartDay(){
-        String[] input ={"32/01/1996","01/01/1996"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("ERROR : Invalid start date",exception.getMessage());
+    void CheckArgumentsImpossibleStartDay() {
+        String[] input = {"32/01/1996", "01/01/1996"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("ERROR : Invalid start date", exception.getMessage());
     }
 
     // Start Date Validation Check
     @Test
-    void CheckArgumentsStartYearBefore(){
-        String[] input ={"31/01/1899","01/01/1996"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("ERROR : Invalid start date",exception.getMessage());
+    void CheckArgumentsStartYearBefore() {
+        String[] input = {"31/01/1899", "01/01/1996"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("ERROR : Invalid start date", exception.getMessage());
 
     }
 
     @Test
-    void CheckArgumentsStartDatesAfter(){
-        String[] input ={"31/01/3000","01/01/1996"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("ERROR : Invalid start date",exception.getMessage());
+    void CheckArgumentsStartDatesAfter() {
+        String[] input = {"31/01/3000", "01/01/1996"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("ERROR : Invalid start date", exception.getMessage());
     }
 
     // End Date Validation Check
     @Test
-    void CheckArgumentsEndDatesBefore(){
-        String[] input ={"31/01/1901","01/01/1899"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("ERROR : Invalid end date.",exception.getMessage());
+    void CheckArgumentsEndDatesBefore() {
+        String[] input = {"31/01/1901", "01/01/1899"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("ERROR : Invalid end date.", exception.getMessage());
     }
 
     @Test
-    void CheckArgumentsEndDatesAfter(){
-        String[] input ={"31/01/1901","01/01/3000"};
-        Exception exception = assertThrows(Exception.class,()->DateCalculator.argument(input));
-        assertEquals("ERROR : Invalid end date.",exception.getMessage());
+    void CheckArgumentsEndDatesAfter() {
+        String[] input = {"31/01/1901", "01/01/3000"};
+        Exception exception = assertThrows(Exception.class, () -> DateCalculator.argument(input));
+        assertEquals("ERROR : Invalid end date.", exception.getMessage());
     }
 
     // Test for validity check for dates
@@ -98,7 +101,7 @@ class DateCalculatorTest {
 
     @Test
     void CheckPatterneCorrect() {
-        assertEquals(true,DateCalculator.isValid("01/01/2019"));
+        assertEquals(true, DateCalculator.isValid("01/01/2019"));
     }
 
     @Test
@@ -118,58 +121,64 @@ class DateCalculatorTest {
 
     @Test
     void CheckDateOutOfBoundLower() {
-        assertEquals(false,DateCalculator.isValid("01/01/1900"));
+        assertEquals(false, DateCalculator.isValid("01/01/1900"));
     }
 
     @Test
-    void CheckDateOutOfBoundUpper() {
-        assertEquals(false,DateCalculator.isValid("01/01/3000"));
+    void CheckAdvancedDaysBetweeen1() {
+        Date date1 = new Date(21, 01, 2010);
+        Date date2 = new Date(01, 06, 2010);
+        assertEquals(130, DateCalculator.result(date1, date2));
+    }
+
+    @Test
+    void CheckBasicDaysBetweeen1() {
+        Date date1 = new Date(02, 06, 1983);
+        Date date2 = new Date(22, 06, 1983);
+        assertEquals(19, DateCalculator.result(date1, date2));
+    }
+
+    @Test
+    void CheckBasicDaysBetweeen2() {
+        Date date1 = new Date(04, 07, 1984);
+        Date date2 = new Date(25, 12, 1984);
+        assertEquals(173, DateCalculator.result(date1, date2));
     }
 
     // Test for days between calculation and logic
     @Test
     void CheckLogic1() {
-        assertEquals(1,DateCalculator.daysBetween("01/01/2000","03/01/2000"));
+        Date date1 = new Date(01, 01, 2000);
+        Date date2 = new Date(03, 01, 2000);
+        assertEquals(1, DateCalculator.result(date1, date2));
     }
 
     @Test
     void CheckLogic2() {
-        assertEquals(0,DateCalculator.daysBetween("03/08/1983","04/08/1983"));
+        Date date1 = new Date(03, 01, 2000);
+        Date date2 = new Date(04, 01, 2000);
+        assertEquals(0, DateCalculator.result(date1, date2));
     }
 
     @Test
     void CheckSameDay() {
-        assertEquals(0,DateCalculator.daysBetween("01/01/2000","01/01/2000"));
-    }
-
-    @Test
-    void CheckDaysBetween2() {
-        assertEquals(19,DateCalculator.daysBetween("02/06/1983","22/06/1983"));
-    }
-
-    @Test
-    void CheckDaysBetween3() {
-        assertEquals(173,DateCalculator.daysBetween("04/07/1984","25/12/1984"));
-    }
-
-    @Test
-    void CheckDaysBetween4() {
-        assertEquals(1979,DateCalculator.daysBetween("03/01/1989","03/08/1983"));
-    }
-
-    @Test
-    void CheckSwappingPosition() {
-        assertEquals(1979,DateCalculator.daysBetween("03/08/1983","03/01/1989"));
+        Date date1 = new Date(01, 01, 2000);
+        Date date2 = new Date(01, 01, 2000);
+        assertEquals(0, DateCalculator.result(date1,date2));
     }
 
     @Test
     void CheckLargeDaysBetween1(){
-        assertEquals(401210,DateCalculator.daysBetween("04/07/1901","25/12/2999"));
+        Date date1 = new Date(04, 07, 1901);
+        Date date2 = new Date(25, 12, 1999);
+        assertEquals(35967,DateCalculator.result(date1,date2));
     }
 
     @Test
     void CheckLargeDaysBetween2(){
-        assertEquals(401400,DateCalculator.daysBetween("01/01/1901","31/12/2999"));
+        Date date1 = new Date(01, 01, 1901);
+        Date date2 = new Date(31, 12, 2999);
+        assertEquals(401400,DateCalculator.result(date1,date2));
     }
-
 }
+

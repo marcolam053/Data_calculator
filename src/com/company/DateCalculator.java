@@ -1,8 +1,6 @@
 package com.company;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,8 +8,9 @@ import java.util.regex.Pattern;
 public class DateCalculator {
 
     private static Scanner keyboard = new Scanner(System.in);
-    private static String startDate = null;
-    private  static String endDate = null;
+    private static Date startDate = null;
+    private  static Date endDate = null;
+    public static Date ref = new Date(1,1,1901);
 
     // Handle user input.
     public static void greetUser() {
@@ -49,18 +48,26 @@ public class DateCalculator {
     }
 
     // Helper method for setting date in entry Handler
-    public static String set_date() {
+    public static Date set_date() {
         Scanner input = new Scanner(System.in);
-        String date ="";
+        String data ="";
+        Date date = null;
         while (input.hasNextLine()) {
-            date = input.nextLine();
-            if(isValid(date)){
+            data = input.nextLine();
+            if(isValid(data)){
+                date = toDate(data);
                 break;
             }else {
                 continue;
             }
         }
         return date;
+    }
+
+    public static Date toDate(String date) {
+        int[] arr = toIntArr(date);
+        Date d = new Date(arr[0],arr[1],arr[2]);
+        return d;
     }
 
     // Check if the input date is valid or not.
@@ -118,13 +125,13 @@ public class DateCalculator {
             } else {
                 // validate and set start date
                 if (isValid(args[0])){
-                    startDate = args[0];
+                    startDate = toDate(args[0]);
                 } else {
                     throw new IllegalArgumentException("ERROR : Invalid start date");
                 }
                 // validate and set end date
                 if (isValid(args[1])){
-                    endDate = args[1];
+                    endDate = toDate(args[1]);
                 }else {
                     throw new IllegalArgumentException("ERROR : Invalid end date.");
                 }
@@ -133,26 +140,34 @@ public class DateCalculator {
     }
 
     // Calculate days between
-    public static void result(String startDate, String endDate){
-        long result = daysBetween(startDate,endDate);
-        System.out.println("The result is : ");
-        System.out.println(result + " days\n");
+    public static int result(Date startDate,Date endDate){
+        int days1 = getDays(startDate);
+        int days2 = getDays(endDate);
+
+        int result = Math.abs(days2-days1) - 1;
+        if(result < 0) {
+            result = 0;
+        }
+        return result;
     }
 
     // Handle date calculation
-    public static long daysBetween(String start, String end) {
-        int[] start_arr = toIntArr(start);
-        int[] end_arr = toIntArr(end);
-        LocalDate startDate = LocalDate.of(start_arr[2],start_arr[1],start_arr[0]);
-        LocalDate endDate = LocalDate.of(end_arr[2],end_arr[1],end_arr[0]);
-        if (startDate.equals(endDate)){
-            return 0;
+    // Reference : http://mathforum.org/library/drmath/view/66535.html
+    public static int leapYear(Date date) {
+        int year = date.getYear();
+        if (date.getMonth() <= 2) {
+           year --;
         }
-        long daysBetween = ChronoUnit.DAYS.between(startDate,endDate);
-        if (daysBetween < 0){
-            daysBetween= daysBetween*-1;
+        return year/4-year/100+year/400;
+    }
+    public static int getDays(Date date) {
+        int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+        int diff = (date.getYear()-1901)*365 + date.getDate();
+        for (int i = 0 ; i < date.getMonth()-1; i++) {
+            diff += daysInMonth[i];
         }
-        return Math.toIntExact(daysBetween)-1;
+        diff += leapYear(date);
+        return diff;
     }
 
     public static void main(String[] args) {
@@ -164,7 +179,9 @@ public class DateCalculator {
             DateCalculator.argument(args);
         }
         // Calculate the days between two dates
-        DateCalculator.result(startDate,endDate);
+        int result = DateCalculator.result(startDate,endDate);
+        System.out.println("The result is : ");
+        System.out.println(result + " days\n");
         keyboard.close();
     }
 }
