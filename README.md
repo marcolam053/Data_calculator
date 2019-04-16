@@ -10,6 +10,5 @@ This Command-Line Programme support Commandline argument and an interface for ma
 Please follow the prompt to use this calculator.
 
 ### This project runs on Java 11. Please install Java 11 before proceeding. [Download](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
-
-There is a .jar file. Run the .jar file
+To run the programme, Select DateCalculatorJAR in out. Build and run.
 
