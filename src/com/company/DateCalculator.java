@@ -27,6 +27,7 @@ public class DateCalculator {
             if (command.matches("[1-2]")) {
                 Manual_entry(command);
                 break;
+
             } else {
                 System.out.println("Invalid input.Try again.");
                 continue;
@@ -160,9 +161,10 @@ public class DateCalculator {
         }
         return year/4-year/100+year/400;
     }
+
     public static int getDays(Date date) {
         int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-        int diff = (date.getYear()-1901)*365 + date.getDate();
+        int diff = (date.getYear()-1901)*365 + date.getDate()-1;
         for (int i = 0 ; i < date.getMonth()-1; i++) {
             diff += daysInMonth[i];
         }
