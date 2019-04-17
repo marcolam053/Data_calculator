@@ -152,7 +152,6 @@ public class DateCalculator {
     }
 
     // Handle date calculation
-    // Reference : http://mathforum.org/library/drmath/view/66535.html
     public static int leapYear(Date date) {
         int year = date.getYear();
         if (date.getMonth() <= 2) {
@@ -160,6 +159,7 @@ public class DateCalculator {
         }
         return year/4-year/100+year/400;
     }
+    
     public static int getDays(Date date) {
         int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
         int diff = (date.getYear()-1901)*365 + date.getDate();
