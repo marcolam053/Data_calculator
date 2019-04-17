@@ -153,7 +153,6 @@ public class DateCalculator {
     }
 
     // Handle date calculation
-    // Reference : http://mathforum.org/library/drmath/view/66535.html
     public static int leapYear(Date date) {
         int year = date.getYear();
         if (date.getMonth() <= 2) {
