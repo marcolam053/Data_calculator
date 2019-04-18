@@ -12,14 +12,14 @@ public class Date {
     }
 
     public int getDate() {
-        return date;
+        return this.date;
     }
 
     public int getMonth() {
-        return month;
+        return this.month;
     }
 
     public int getYear() {
-        return year;
+        return this.year;
     }
 }
