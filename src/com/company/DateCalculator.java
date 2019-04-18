@@ -152,15 +152,6 @@ public class DateCalculator {
         return result;
     }
 
-    // Handle date calculation
-    public static int leapYear(Date date) {
-        int year = date.getYear();
-        if (date.getMonth() <= 2) {
-           year --;
-        }
-        return year/4-year/100+year/400;
-    }
-
     public static int getDays(Date date) {
         int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
         int diff = (date.getYear()-1901)*365 + date.getDate()-1;
@@ -169,6 +160,15 @@ public class DateCalculator {
         }
         diff += leapYear(date);
         return diff;
+    }
+
+    // Calculate Leap year Number of days
+    public static int leapYear(Date date) {
+        int year = date.getYear();
+        if (date.getMonth() <= 2) {
+           year --;
+        }
+        return year/4-year/100+year/400;
     }
 
     public static void main(String[] args) {

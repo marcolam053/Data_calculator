@@ -180,5 +180,12 @@ class DateCalculatorTest {
         Date date2 = new Date(31, 12, 2999);
         assertEquals(401400,DateCalculator.result(date1,date2));
     }
+
+    @Test
+    void CheckLargeDaysBetween3(){
+        Date date1 = new Date(01, 01, 1901);
+        Date date2 = new Date(31, 12, 2999);
+        assertEquals(401400,DateCalculator.result(date2,date1));
+    }
 }
 
