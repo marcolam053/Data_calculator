@@ -20,7 +20,7 @@ cd [Directory where the jar file is located]
 java -jar Data_calculator.jar [commandline argument 1] [commandline argument 2]
 ```
 ## Issues
-If issue is found or cannot run, please create an issue and I will investigate ASAP. Thanks :)
+If issues are found and/or cannot run, please create an issue and I will investigate ASAP. Thanks :)
 
 ## Contact
 Marco Lam [marcolam053@gmail.com](mailto:marcolam053@gmail.com) 
